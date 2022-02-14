@@ -31,6 +31,6 @@ public record EventService(BalanceRepository repository) {
   private Mono<EventResponse> handleTransfer(EventRequest request) {
     return handleWithdraw(request)
         .flatMap(respOrigin -> handleDeposit(request)
-            .map(respDestination -> new EventResponse(respDestination.destination(), respOrigin.origin())));
+            .map(respDestination -> new EventResponse(respOrigin.origin(), respDestination.destination())));
   }
 }
