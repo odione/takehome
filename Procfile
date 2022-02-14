@@ -1,1 +1,1 @@
-web: java -jar build/libs/take-home-0.0.1-SNAPSHOT.jar
+web: java -jar -Dserver.port=$PORT build/libs/take-home-0.0.1-SNAPSHOT.jar
