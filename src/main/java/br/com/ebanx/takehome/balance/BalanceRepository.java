@@ -1,14 +1,14 @@
 package br.com.ebanx.takehome.balance;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
 public class BalanceRepository {
 
-  private final ConcurrentMap<String, Integer> balances = new ConcurrentHashMap<>();
+  private final Map<String, Integer> balances = new ConcurrentHashMap<>();
 
   public Mono<Integer> getBalanceById(String id) {
     return Mono.fromCallable(() -> balances.get(id));

@@ -20,17 +20,17 @@ public record EventService(BalanceRepository repository) {
 
   private Mono<EventResponse> handleDeposit(EventRequest request) {
     return repository.deposit(request.destination(), request.amount())
-        .map(total -> EventResponse.createDeposit(request.destination(), total));
+        .map(total -> EventResponse.fromDestination(request.destination(), total));
   }
 
   private Mono<EventResponse> handleWithdraw(EventRequest request) {
     return repository.withdraw(request.origin(), request.amount())
-        .map(total -> EventResponse.createWithdraw(request.origin(), total));
+        .map(total -> EventResponse.fromOrigin(request.origin(), total));
   }
 
   private Mono<EventResponse> handleTransfer(EventRequest request) {
     return handleWithdraw(request)
         .flatMap(respOrigin -> handleDeposit(request)
-            .map(respDestination -> new EventResponse(respOrigin.origin(), respDestination.destination())));
+            .map(respDestination -> EventResponse.of(respOrigin, respDestination)));
   }
 }
