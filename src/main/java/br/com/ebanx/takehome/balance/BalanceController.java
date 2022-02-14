@@ -16,7 +16,7 @@ public class BalanceController {
   private final Mono<String> resetResponse = Mono.just("OK");
 
   @GetMapping(path = "/balance", params = "account_id")
-  Mono<Integer> getBalance(@RequestParam("account_id") Integer accountId) {
+  Mono<Integer> getBalance(@RequestParam("account_id") String accountId) {
     return repository.getBalanceById(accountId)
         .switchIfEmpty(Mono.error(BalanceNotFoundException::new));
   }
